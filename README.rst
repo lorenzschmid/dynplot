@@ -5,10 +5,6 @@ Extends matplotlib's pyplot.plot() to allow for repetitive plotting to the same 
 
 There is no simple way to update multiple lines repetitively and continuously of an existing figure in `matplotlib <https://matplotlib.org/>`_. Using this class as drop-in replacement for matplotlib's pyplot, the figure's line will be updated upon every call of the ``plot()`` method and create thus a dynamic plot, constantly refreshing.
 
-This modules contains a helper instance to simplify importing and use:
-
->>> dplt = dynplot()
-
 **Current limitations:**
 
 - Only the ``plot`` function is supported.
@@ -48,3 +44,16 @@ Multiple calls (i.e. multiple lines) during one repetition
 >>>     dplt.plot(y1)
 >>>     dplt.plot(y2)
 >>>     dplt.show()
+
+
+Installation
+------------
+
+The module is build in a way to be installable with `pip <https://pypi.org/project/pip/>`_:
+
+1. Clone this repository and enter it
+2. Type ``pip install .`` to install it
+
+In order to add it to a requirements file as normally obtained from ``pip freeze``, use the following line:
+
+``-e git+https://github.com/lorenzschmid/dynplot.git#egg=dynplot==1.0.0``
