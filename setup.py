@@ -9,7 +9,7 @@ setup(
     url='https://github.com/lorenzschmid/dynplot',
     license='LICENSE.txt',
     description='Small matplotlib extension allowing for dynamic plotting.',
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     install_requires=[
         "matplotlib >= 3.0.0"
     ],
