@@ -106,8 +106,10 @@ class dynplot():
             # Create set of lines to be updated
             if len(args) == 1:
                 nbr_lines = 1
+                single_line = True
             else:
                 nbr_lines = len(args) // 2
+                single_line = False
 
             # Only update parts of the lines
             if len(self.lines) > 1 and nbr_lines < len(self.lines):
@@ -125,7 +127,7 @@ class dynplot():
             # Apply changes to set of lines to be updated
             for i, line_id in enumerate(line_ids):
                 # Set line values
-                if nbr_lines == 1:
+                if single_line:
                     self.lines[line_id].set_ydata(args[i])
                 else:
                     self.lines[line_id].set_xdata(args[2*i])
