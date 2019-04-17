@@ -16,16 +16,13 @@ There is no simple way to update multiple lines repetitively and continuously of
 
 **Example**:
 
-.. code-block:: python
-   :linenos:
-
-   from dynplot import dplt
-   from math import sin, pi
-
-   dplt = dplt()
-   for i in range(100):
-       x = range(i, i+20)
-       y = [sin(2*pi*x/20) for x in x]
-       dplt.plot(x, y)
-       _ = dplt.ax.set_title('Wave')
-       dplt.show()
+>>> from dynplot import dplt
+>>> from math import sin, pi
+>>>
+>>> dplt = dplt()
+>>> for i in range(100):
+>>>     x = range(i, i+20)
+>>>     y = [sin(2*pi*x/20) for x in x]
+>>>     dplt.plot(x, y)
+>>>     _ = dplt.ax.set_title('Wave')
+>>>     dplt.show()
