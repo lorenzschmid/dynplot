@@ -12,6 +12,9 @@ class dplt():
         updated upon every call of the ``plot()`` method and create thus a
         dynamic plot, constantly refreshing.
 
+        :ivar fig: ``matplotlib.figure.Figure`` instance of the figure
+        :ivar ax: ``matplotlib.axes.Axes`` instance of the figure
+
         Current limitations:
 
         - Only the ``plot`` function is supported.
@@ -20,12 +23,14 @@ class dplt():
 
           >>> dplt.title('Will fail!')
 
-        - ``dynplot.plot()`` only accepts plotting if x and y data are given
+          In this case, instead use the following:
 
-        :ivar fig: ``matplotlib.figure.Figure`` instance of the figure
-        :ivar ax: ``matplotlib.axes.Axes`` instance of the figure
+          >>> _ = dplt.ax.set_title('Will work!')
 
-        Example:
+        Examples:
+
+        Single call during one repetition, could also contain multiple
+        ``x``/``y`` data pairs.
 
         >>> from dynplot import dplt
         >>> from math import sin, pi
@@ -36,6 +41,20 @@ class dplt():
         >>>     y = [sin(2*pi*x/20) for x in x]
         >>>     dplt.plot(x, y)
         >>>     _ = dplt.ax.set_title('Wave')
+        >>>     dplt.show()
+
+        Multiple calls (i.e. multiple lines) during one repetition
+
+        >>> from dynplot import dplt
+        >>> from math import sin, pi
+        >>>
+        >>> dplt = dplt()
+        >>> for i in range(100):
+        >>>     x = range(i, i+20)
+        >>>     y1 = [sin(2*pi*x/20) for x in x]
+        >>>     y2 = [sin(2*pi*x/10) for x in x]
+        >>>     dplt.plot(y1)
+        >>>     dplt.plot(y2)
         >>>     dplt.show()
 
         :param refresh_rate: Refresh rate (in seconds), has a lower limit
@@ -64,7 +83,14 @@ class dplt():
         if not self._initialized:
             lines = getattr(self.ax, fcn)(*args, **kwargs)
 
+            # Verify if not consecutive call, adding multiple lines in
+            # multiple steps (i.e. multiple calls of plot() before call to
+            # show())
             if not hasattr(self, 'lines') or not self.lines:
+                # create list if only one line existing
+                if not isinstance(lines, list):
+                    lines = [lines]
+
                 self.lines = lines
             else:
                 for line in lines:
@@ -76,11 +102,13 @@ class dplt():
             args = list(filter(lambda x: not isinstance(x, str), args))
 
             # Create set of lines to be updated
-            # TODO: Currently only plotting with x and y data supported
-            nbr_lines = len(args) // 2
+            if len(args) == 1:
+                nbr_lines = 1
+            else:
+                nbr_lines = len(args) // 2
 
             # Only update parts of the lines
-            if nbr_lines < len(self.lines):
+            if len(self.lines) > 1 and nbr_lines < len(self.lines):
                 line_ids = list(range(self._crnt_line,
                                       self._crnt_line + nbr_lines))
                 line_ids = [i % len(self.lines) for i in line_ids]
@@ -95,8 +123,11 @@ class dplt():
             # Apply changes to set of lines to be updated
             for i, line_id in enumerate(line_ids):
                 # Set line values
-                self.lines[line_id].set_xdata(args[2*i])
-                self.lines[line_id].set_ydata(args[2*i+1])
+                if nbr_lines == 1:
+                    self.lines[line_id].set_ydata(args[i])
+                else:
+                    self.lines[line_id].set_xdata(args[2*i])
+                    self.lines[line_id].set_ydata(args[2*i+1])
 
                 # Set line attributes if existing
                 for key, value in kwargs.items():
