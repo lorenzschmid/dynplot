@@ -3,6 +3,47 @@ from functools import partialmethod
 
 
 class dplt():
+    """Extends matplotlib's pyplot.plot() to allow for repetitive plotting
+
+        There is no simple way to update multiple lines repetitively and
+        continuously of an existing figure in
+        `matplotlib <https://matplotlib.org/>`_. Using this class as drop-in
+        replacement for matplotlib's pyplot, the figure's line will be
+        updated upon every call of the ``plot()`` method and create thus a
+        dynamic plot, constantly refreshing.
+
+        Current limitations:
+
+        - Only the ``plot`` function is supported.
+        - The figure and axes are only configurable via the internal ``fig``
+          and ``ax`` attribute, i.e. the following call will _fail_:
+
+          >>> dplt.title('Will fail!')
+
+        - ``dynplot.plot()`` only accepts plotting if x and y data are given
+
+        :ivar fig: ``matplotlib.figure.Figure`` instance of the figure
+        :ivar ax: ``matplotlib.axes.Axes`` instance of the figure
+
+        Example:
+
+        >>> from dynplot import dplt
+        >>> from math import sin, pi
+        >>>
+        >>> dplt = dplt()
+        >>> for i in range(100):
+        >>>     x = range(i, i+20)
+        >>>     y = [sin(2*pi*x/20) for x in x]
+        >>>     dplt.plot(x, y)
+        >>>     _ = dplt.ax.set_title('Wave')
+        >>>     dplt.show()
+
+        :param refresh_rate: Refresh rate (in seconds), has a lower limit
+                             given by the processing power of your machine
+        :type refresh_rate: float
+    """
+
+    # TODO: Add and test more plotting functions
     supported_fcns = ['plot']
 
     def __init__(self, refresh_rate=0.1):
@@ -35,6 +76,7 @@ class dplt():
             args = list(filter(lambda x: not isinstance(x, str), args))
 
             # Create set of lines to be updated
+            # TODO: Currently only plotting with x and y data supported
             nbr_lines = len(args) // 2
 
             # Only update parts of the lines
@@ -69,6 +111,15 @@ class dplt():
             return wrapper
 
     def show(self, permanent=False, *args, **kwargs):
+        """Displays figure
+
+            Calls ``matplotlib.pyplot.pause()`` for continuous plotting or,
+            if ``permanent`` is ``True`` forwards the call to
+             ``matplotlib.pyplot.show()``
+
+             :param permanent: Don't update or refresh plot
+             :type permanent: bool
+        """
         self._initialized = True
 
         # Rescale
