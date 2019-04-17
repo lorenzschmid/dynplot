@@ -24,9 +24,10 @@ This modules contains a helper instance to simplify importing and use:
 
 Single call during one repetition, could also contain multiple ``x``/``y`` data pairs.
 
->>> from dynplot import dplt
+>>> from dynplot import dynplot
 >>> from math import sin, pi
 >>>
+>>> dplt = dynplot()
 >>> for i in range(100):
 >>>     x = range(i, i+20)
 >>>     y = [sin(2*pi*x/20) for x in x]
@@ -36,9 +37,10 @@ Single call during one repetition, could also contain multiple ``x``/``y`` data 
 
 Multiple calls (i.e. multiple lines) during one repetition
 
->>> from dynplot import dplt
+>>> from dynplot import dynplot
 >>> from math import sin, pi
 >>>
+>>> dplt = dynplot()
 >>> for i in range(100):
 >>>     x = range(i, i+20)
 >>>     y1 = [sin(2*pi*x/20) for x in x]

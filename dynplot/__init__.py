@@ -31,32 +31,17 @@ class dynplot():
 
           >>> _ = dplt.ax.set_title('Will work!')
 
-        Examples:
+        Example:
 
-        Single call during one repetition, could also contain multiple
-        ``x``/``y`` data pairs.
-
-        >>> from dynplot import dplt
+        >>> from dynplot import dynplot
         >>> from math import sin, pi
         >>>
+        >>> dplt = dynplot()
         >>> for i in range(100):
         >>>     x = range(i, i+20)
         >>>     y = [sin(2*pi*x/20) for x in x]
         >>>     dplt.plot(x, y)
         >>>     _ = dplt.ax.set_title('Wave')
-        >>>     dplt.show()
-
-        Multiple calls (i.e. multiple lines) during one repetition
-
-        >>> from dynplot import dplt
-        >>> from math import sin, pi
-        >>>
-        >>> for i in range(100):
-        >>>     x = range(i, i+20)
-        >>>     y1 = [sin(2*pi*x/20) for x in x]
-        >>>     y2 = [sin(2*pi*x/10) for x in x]
-        >>>     dplt.plot(y1)
-        >>>     dplt.plot(y2)
         >>>     dplt.show()
 
         :param refresh_rate: Refresh rate (in seconds), has a lower limit
