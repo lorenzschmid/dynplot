@@ -1,7 +1,7 @@
 dynplot
 =======
 
-Extends matplotlib's pyplot.plot() to allow for repetitive plotting
+Extends matplotlib's pyplot.plot() to allow for repetitive plotting to the same figure
 
 There is no simple way to update multiple lines repetitively and continuously of an existing figure in `matplotlib <https://matplotlib.org/>`_. Using this class as drop-in replacement for matplotlib's pyplot, the figure's line will be updated upon every call of the ``plot()`` method and create thus a dynamic plot, constantly refreshing.
 
