@@ -5,6 +5,10 @@ Extends matplotlib's pyplot.plot() to allow for repetitive plotting
 
 There is no simple way to update multiple lines repetitively and continuously of an existing figure in `matplotlib <https://matplotlib.org/>`_. Using this class as drop-in replacement for matplotlib's pyplot, the figure's line will be updated upon every call of the ``plot()`` method and create thus a dynamic plot, constantly refreshing.
 
+This modules contains a helper instance to simplify importing and use:
+
+>>> dplt = dynplot()
+
 **Current limitations:**
 
 - Only the ``plot`` function is supported.
@@ -23,7 +27,6 @@ Single call during one repetition, could also contain multiple ``x``/``y`` data 
 >>> from dynplot import dplt
 >>> from math import sin, pi
 >>>
->>> dplt = dplt()
 >>> for i in range(100):
 >>>     x = range(i, i+20)
 >>>     y = [sin(2*pi*x/20) for x in x]
@@ -36,7 +39,6 @@ Multiple calls (i.e. multiple lines) during one repetition
 >>> from dynplot import dplt
 >>> from math import sin, pi
 >>>
->>> dplt = dplt()
 >>> for i in range(100):
 >>>     x = range(i, i+20)
 >>>     y1 = [sin(2*pi*x/20) for x in x]

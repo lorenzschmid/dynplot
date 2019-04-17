@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from functools import partialmethod
 
 
-class dplt():
+class dynplot():
     """Extends matplotlib's pyplot.plot() to allow for repetitive plotting
 
         There is no simple way to update multiple lines repetitively and
@@ -14,6 +14,10 @@ class dplt():
 
         :ivar fig: ``matplotlib.figure.Figure`` instance of the figure
         :ivar ax: ``matplotlib.axes.Axes`` instance of the figure
+
+        This modules contains a helper instance to simplify importing and use:
+
+        >>> dplt = dynplot()
 
         Current limitations:
 
@@ -35,7 +39,6 @@ class dplt():
         >>> from dynplot import dplt
         >>> from math import sin, pi
         >>>
-        >>> dplt = dplt()
         >>> for i in range(100):
         >>>     x = range(i, i+20)
         >>>     y = [sin(2*pi*x/20) for x in x]
@@ -48,7 +51,6 @@ class dplt():
         >>> from dynplot import dplt
         >>> from math import sin, pi
         >>>
-        >>> dplt = dplt()
         >>> for i in range(100):
         >>>     x = range(i, i+20)
         >>>     y1 = [sin(2*pi*x/20) for x in x]
@@ -165,3 +167,7 @@ class dplt():
             plt.show(*args, **kwargs)
         else:
             plt.pause(self.refresh_rate)
+
+
+# Helper Instance
+dplt = dynplot()
